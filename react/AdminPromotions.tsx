@@ -1,9 +1,3 @@
-import React from 'react'
-
-const AdminPromotions = () => {
-  return (
-    <div>AdminPromotions</div>
-  )
-}
+import AdminPromotions from "./components/admin";
 
 export default AdminPromotions

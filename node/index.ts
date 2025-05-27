@@ -2,7 +2,7 @@ import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
-import { getPromotionModule, postPromotionModule } from './middlewares/promoitonModule'
+import { getPromotionModule, postPromotionModule } from './middlewares/promotionModule'
 
 const TIMEOUT_MS = 800
 
