@@ -42,6 +42,10 @@ export default class PromotionModule extends ExternalClient {
         })
     }
 
+    public deletePromotionModule(documentId: string) {        
+        return this.http.delete(`/api/dataentities/PM/documents/${documentId}`)
+    }
+
     /* 
         public patchProductTag(documentId: string, body: propsProductTad) {
             return this.http.patch(`/api/dataentities/PT/documents/${documentId}`, body)

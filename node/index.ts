@@ -2,7 +2,7 @@ import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
-import { getPromotionModule, postPromotionModule } from './middlewares/promotionModule'
+import { deletePromotionModule, getPromotionModule, postPromotionModule } from './middlewares/promotionModule'
 
 const TIMEOUT_MS = 800
 
@@ -53,6 +53,9 @@ export default new Service({
     }),
     getPromotionModule: method({
       GET: [getPromotionModule]
+    }),
+    deletePromotionModule: method({
+      DELETE: [deletePromotionModule]
     })
   },
 })

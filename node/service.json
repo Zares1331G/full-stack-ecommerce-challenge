@@ -13,6 +13,10 @@
     "getPromotionModule": {
       "path": "/_v/getPromotionModule",
       "public": true
+    },
+    "deletePromotionModule": {
+      "path": "/_v/deletePromotionModule",
+      "public": true
     }
   }
 }
