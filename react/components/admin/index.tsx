@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import { getPromotionModule, updatePromotionModule } from '../../utils/fetchPromtions'
 import ModalPromotion from './ModalPromotion'
 
-
 const AdminPromotions = () => {
     const [data, setData] = useState<any[]>([])
     const [modalAction, setModalAction] = useState<string>('')
@@ -28,8 +27,8 @@ const AdminPromotions = () => {
 
         try {
             const body = {
-              documentId: id,
-              active: !active,
+                documentId: id,
+                active: !active,
             }
 
             await updatePromotionModule(body)
@@ -77,6 +76,38 @@ const AdminPromotions = () => {
                             checked={cellData}
                             onChange={() => handleToggleActive(rowData)}
                         />
+                    )
+                },
+            },
+            startDate: {
+                title: "Date Start",
+                width: 100,
+                cellRenderer: ({ rowData }: any) => {
+                    const fecha = new Date(rowData.startDate)
+                    const fechaFormateada = fecha.toLocaleDateString('es-CO', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    })
+
+                    return (
+                        <span>{fechaFormateada}</span>
+                    )
+                },
+            },
+            endDate: {
+                title: "Date End",
+                width: 100,
+                cellRenderer: ({ rowData }: any) => {
+                    const fecha = new Date(rowData.startDate)
+                    const fechaFormateada = fecha.toLocaleDateString('es-CO', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    })
+
+                    return (
+                        <span>{fechaFormateada}</span>
                     )
                 },
             },
