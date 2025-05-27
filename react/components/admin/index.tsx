@@ -99,7 +99,7 @@ const AdminPromotions = () => {
                 title: "Date End",
                 width: 100,
                 cellRenderer: ({ rowData }: any) => {
-                    const fecha = new Date(rowData.startDate)
+                    const fecha = new Date(rowData.endDate)
                     const fechaFormateada = fecha.toLocaleDateString('es-CO', {
                         day: '2-digit',
                         month: '2-digit',

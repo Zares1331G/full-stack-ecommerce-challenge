@@ -115,3 +115,21 @@ export async function patchPromotionModule(ctx: Context, next: () => Promise<any
 
     await next()
 }
+
+export async function promoCheck(ctx: Context, next: () => Promise<any>) {
+
+    try {
+        const data = await json(ctx.req)
+
+        console.log("---->", data)
+        ctx.set('Access-Control-Allow-Origin', '*')
+        ctx.status = 200
+        ctx.body = data
+    } catch (error) {
+        console.log({ error })
+        ctx.status = 400
+        ctx.body = error
+    }
+
+    await next()
+}

@@ -21,6 +21,11 @@
     "patchPromotionModule": {
       "path": "/_v/patchPromotionModule",
       "public": true
+    },
+    "promoCheck": {
+      "path": "/_v/promo-check",
+      "public": true
     }
   }
 }
+

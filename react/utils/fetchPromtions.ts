@@ -83,3 +83,20 @@ export const updatePromotionModule = async (body: any) => {
         return null;
     }
 };
+
+export const promoCheck = async (data:any) => {
+    try {
+
+        const response = await fetch("/_v/promo-check", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+
+        return await response.json();
+    } catch (error) {
+        console.log(error, "error")
+    }
+}

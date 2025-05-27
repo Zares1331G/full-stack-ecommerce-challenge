@@ -1,5 +1,8 @@
 {
     "promotional-banner" : {
         "component": "PromotionalBanner"
+    },
+    "promotion-app": {
+        "component": "PromotionApp"
     }
 }
