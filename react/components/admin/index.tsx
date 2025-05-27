@@ -1,48 +1,42 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, PageHeader, Table, Toggle } from 'vtex.styleguide'
+import { Layout, PageHeader, Table, Toggle, Button, IconDelete, IconEdit } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
-import { getPromotionModule } from '../../utils/fetchPromtions'
+import { getPromotionModule, updatePromotionModule } from '../../utils/fetchPromtions'
 import ModalPromotion from './ModalPromotion'
 
 
 const AdminPromotions = () => {
     const [data, setData] = useState<any[]>([])
+    const [modalAction, setModalAction] = useState<string>('')
+    const [openModal, setOpenModal] = useState(false)
+    const [selectedPromo, setSelectedPromo] = useState<any>()
 
-    useEffect(() => {
-        const fetchDataTags = async () => {
-            try {
-                const dataProductTag = await getPromotionModule()
+    const fetchDataPromo = async () => {
+        try {
+            const dataProductTag = await getPromotionModule()
 
-                setData(dataProductTag)
+            setData(dataProductTag)
 
-            } catch (error) {
-                console.error('Error al obtener tags:', error)
-                setData([])
-            }
+        } catch (error) {
+            console.error('Error al obtener tags:', error)
+            setData([])
         }
-
-        fetchDataTags()
-
-        return () => {
-
-        }
-    }, [])
-
+    }
 
     const handleToggleActive = async (rowData: any) => {
         const { id, active } = rowData
 
         try {
-            /* const body = {
+            const body = {
               documentId: id,
               active: !active,
-            } */
+            }
 
-            //await updateProductTags(body)
+            await updatePromotionModule(body)
             // Actualizas el estado en lugar de recargar
             setData(prev =>
-                prev.map(tag =>
-                    tag.id === id ? { ...tag, active: !active } : tag
+                prev.map(data =>
+                    data.id === id ? { ...data, active: !active } : data
                 )
             )
         } catch (err) {
@@ -50,23 +44,32 @@ const AdminPromotions = () => {
         }
     }
 
+    const handleCreatePromotion = () => {
+        setOpenModal(prev => !prev)
+        setModalAction('create')
+    }
+
     const customSchema = {
         properties: {
             promotionName: {
                 title: "Name",
-                with: 50
+                width: 200
             },
             typePromotion: {
                 title: "Type",
-                with: 50
+                width: 100
             },
             minimumAmount: {
-                title: "Minimum Amount",
-                with: 50
+                title: "Amount",
+                width: 100
+            },
+            category: {
+                title: "Categoría",
+                width: 100
             },
             active: {
                 title: "Active",
-                with: 100,
+                width: 100,
                 cellRenderer: ({ cellData, rowData }: any) => {
 
                     return (
@@ -80,16 +83,43 @@ const AdminPromotions = () => {
             actions: {
                 title: 'Actions',
                 width: 100,
-                cellRenderer: (()=>{
+                cellRenderer: (({ rowData }: any) => {
                     return (
                         <div>
-                            Actions
+                            <span
+                                className='mr5'
+                                style={{ cursor: 'pointer', marginRight: '10px' }}
+                                onClick={() => {
+                                    setOpenModal(prev => !prev)
+                                    setModalAction('edit')
+                                    setSelectedPromo(rowData)
+                                }}
+                            >
+                                <IconEdit />
+                            </span>
+                            <span
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => {
+                                    setOpenModal(prev => !prev)
+                                    setModalAction('delete')
+                                    setSelectedPromo(rowData)
+                                }}
+                            >
+                                <IconDelete />
+                            </span>
                         </div>
                     )
                 })
             }
         }
     }
+
+    useEffect(() => {
+
+        fetchDataPromo()
+
+        return () => { }
+    }, [])
 
     return (
         <Layout
@@ -99,15 +129,18 @@ const AdminPromotions = () => {
                 />
             }
         >
-            <ModalPromotion />
+            <Button onClick={handleCreatePromotion}>Nueva promoción</Button>
+            <ModalPromotion
+                modalAction={modalAction}
+                setOpenModal={setOpenModal}
+                openModal={openModal}
+                selectedPromo={selectedPromo}
+                fetchDataPromo={fetchDataPromo}
+            />
             <Table
                 schema={customSchema}
                 items={data}
                 indexColumnLabel="Index"
-                toolbar={{
-                    label: 'New',
-                    handleCallback: () => alert('handle new line callback')
-                }}
             />
         </Layout>
     )

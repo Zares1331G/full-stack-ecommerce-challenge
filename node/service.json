@@ -17,6 +17,10 @@
     "deletePromotionModule": {
       "path": "/_v/deletePromotionModule",
       "public": true
+    },
+    "patchPromotionModule": {
+      "path": "/_v/patchPromotionModule",
+      "public": true
     }
   }
 }
