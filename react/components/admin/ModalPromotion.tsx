@@ -205,7 +205,7 @@ const ModalPromotion = ({ modalAction, setOpenModal, openModal, selectedPromo, f
                             </div>
                             <div className="w-100 mv6">
                                 <Dropdown
-                                    label="Posición"
+                                    label="Tipo de promoción"
                                     options={typeOptions}
                                     value={dataInfo.typePromotion}
                                     onChange={(e: any) =>

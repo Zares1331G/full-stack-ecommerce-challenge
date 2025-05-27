@@ -8,8 +8,6 @@ const PromotionApp = () => {
 
     const { orderForm, loading } = useOrderForm();
 
-    console.log("----> ORDER", dataPromoAplied)
-
     useEffect(() => {
         if (loading) return
 
@@ -33,12 +31,19 @@ const PromotionApp = () => {
 
         handleValidatePromo()
 
-
-        return () => { }
     }, [orderForm])
 
-    return (
-        <div>PromotionApp</div>
+    return dataPromoAplied.length && (
+        <div>
+            Promociones a las que puedes acceder
+            {dataPromoAplied.length && dataPromoAplied.map((promo: any, index: number) => {
+                return (
+                    <>
+                        <p key={index}>{promo.promotionName}</p>
+                    </>
+                )
+            })}
+        </div>
     )
 }
 

@@ -1,6 +1,28 @@
 import type { InstanceOptions, IOContext } from '@vtex/api'
 import { ExternalClient } from '@vtex/api'
 
+type Promotion = {
+    active: boolean
+    category: string | string[]
+    endDate: string
+    minimumAmount: string
+    promotionName: string
+    startDate: string
+    typePromotion: string
+    id: string
+    [key: string]: any
+}
+
+type Item = {
+    productCategoryIds: string
+    [key: string]: any
+}
+
+type CartData = {
+    value: number
+    items: Item[]
+}
+
 interface propsPromotionModule {
     active: boolean
     category: string
@@ -42,7 +64,7 @@ export default class PromotionModule extends ExternalClient {
         })
     }
 
-    public deletePromotionModule(documentId: string) {        
+    public deletePromotionModule(documentId: string) {
         return this.http.delete(`/api/dataentities/PM/documents/${documentId}`)
     }
 
@@ -51,4 +73,35 @@ export default class PromotionModule extends ExternalClient {
     }
 
 
+    public getValidPromotions(cart: CartData, promotions: Promotion[]): Promotion[] {
+        const now = new Date()
+        const cartValue = cart.value
+
+        const itemCategories = cart.items
+            .map(item => item.productCategoryIds.split('/').filter(Boolean))
+            .reduce((acc, val) => acc.concat(val), [])
+
+        return promotions.filter(promo => {
+            if (!promo.active) return false
+
+            const promoStart = new Date(promo.startDate)
+            const promoEnd = new Date(promo.endDate)
+            const minimumAmount = parseFloat(promo.minimumAmount)
+
+            const promoCategories = Array.isArray(promo.category)
+                ? promo.category
+                : [promo.category]
+
+            const hasMatchingCategory = itemCategories.some((cat: any) =>
+                promoCategories.includes(cat)
+            )
+
+            return (
+                now >= promoStart &&
+                now <= promoEnd &&
+                cartValue >= minimumAmount &&
+                hasMatchingCategory
+            )
+        })
+    }
 }

@@ -120,11 +120,13 @@ export async function promoCheck(ctx: Context, next: () => Promise<any>) {
 
     try {
         const data = await json(ctx.req)
+        const allPromos = await ctx.clients.promotionModule.getAllPromotionModule()
 
-        console.log("---->", data)
+        const validPromotions = ctx.clients.promotionModule.getValidPromotions(data, allPromos)
+        
         ctx.set('Access-Control-Allow-Origin', '*')
         ctx.status = 200
-        ctx.body = data
+        ctx.body = validPromotions
     } catch (error) {
         console.log({ error })
         ctx.status = 400
