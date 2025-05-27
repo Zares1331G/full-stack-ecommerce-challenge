@@ -1,0 +1,13 @@
+{
+  "section": "storeSetup",
+  "titleId": "admin-promotions.navigation.label-group",
+  "subSection": "example",
+  "searchKeyWordsHelpers": "admin-promotions.navigation.search.kws",
+  "subSectionItems": [
+    {
+      "labelId": "admin-promotions.navigation.label-table",
+      "path": "/admin/new-promotions",
+      "searchKeyWordsHelpers": "admin-promotions.navigation.table.search.kws"
+    }
+  ]
+}

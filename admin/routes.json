@@ -1,0 +1,6 @@
+{
+  "admin.app.product-tag": {
+    "component": "AdminPromotions",
+    "path": "/admin/app/new-promotions"
+  }
+}
