@@ -2,17 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { ModalDialog, Input, Dropdown, DatePicker, Toggle } from 'vtex.styleguide'
 import { deletePromotionModule, postPromotionModule, updatePromotionModule } from '../../utils/fetchPromtions'
 
-/* interface propsSelectedPromo {
-    id: string
-} */
-/* interface propsModalPromotion {
-    modalAction: string
-    setOpenModal: any
-    openModal: boolean
-    selectedPromo: any
-    fetchDataPromo: any
-} */
-
 interface propsData {
     promotionName: string;
     minimumAmount: string;
